@@ -1,0 +1,22 @@
+.sideBar {
+  height: 100%;
+  width: 50px;
+  background-color: var(--background-primary);
+  display: flex;
+  flex-flow: column;
+}
+.sideButton {
+  width: 50px;
+  height: 50px;
+  border-top: 1px solid var(--elements);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sideButton img {
+  filter: invert(100%);
+  width: 25px;
+}
+.sideButton:last-child {
+  border-bottom: 1px solid var(--elements);
+}

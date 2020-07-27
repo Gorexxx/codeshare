@@ -1,23 +1,21 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import styles from "./App.module.css";
-import Coding from './components/Coding/Coding'
-import MainPage from './components/MainPage/MainPage'
-import NavBar from './components/NavBar/NavBar'
-import SideBar from './components/SideBar/SideBar'
+import Coding from "./components/Coding/Coding";
+import MainPage from "./components/MainPage/MainPage";
+import NavBar from "./components/NavBar/NavBar";
 
 function App() {
   return (
     <div className={styles.App}>
-      <NavBar/>
       <BrowserRouter>
+        <NavBar />
         <Switch>
           <Route exact path="/">
-            <MainPage/>
+            <MainPage />
           </Route>
           <Route path="/">
-            <Coding/>
-            <SideBar/>
+            <Coding />
           </Route>
         </Switch>
       </BrowserRouter>

@@ -1,0 +1,36 @@
+.navbar {
+  height: 5vh;
+  width: 100%;
+  background-color: var(--background-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+.enterRoom{
+  width: 20%;
+  min-width: 200px;
+  max-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.enterRoom input {
+  background: none;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid var(--elements);
+  width: 100%;
+}
+.enterRoom input::placeholder {
+  color: var(--elements);
+}
+.enterRoom a {
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  background: none;
+  outline: none;
+  cursor: pointer;
+  color: var(--elements);
+}
