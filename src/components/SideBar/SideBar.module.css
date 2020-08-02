@@ -5,18 +5,50 @@
   display: flex;
   flex-flow: column;
 }
+.sideBarClosed {
+  width: 50px;
+}
+.sideBarOpen {
+  width: 350px;
+  display: flex;
+}
 .sideButton {
   width: 50px;
   height: 50px;
-  border-top: 1px solid var(--elements);
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.5s;
+}
+.sideButton:hover {
+  background-color: var(--background-secondary);
 }
 .sideButton img {
   filter: invert(100%);
   width: 25px;
 }
-.sideButton:last-child {
-  border-bottom: 1px solid var(--elements);
+.content {
+  width: 100%;
+  height: 100%;
+  background-color: var(--background-secondary);
+}
+.content h2{
+  height: 50px;
+  display: grid;
+  place-items: center;
+}
+.focusedItem {
+  background-color: var(--background-secondary);
+}
+.option{
+  width: 100%;
+  padding: 20px;
+  font-size: 1.1rem;
+}
+.option select, .option option{
+  color: black;
+  outline: none;
+  width: 100%;
+  font-size: 1rem;
 }
