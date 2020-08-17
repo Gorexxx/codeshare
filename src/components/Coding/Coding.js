@@ -1,60 +1,62 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { Component } from "react";
 import styles from "./Coding.module.css";
 import SideBar from "../SideBar/SideBar";
-import { useLocation } from "react-router-dom";
+import openSocket from "socket.io-client";
 
-const Coding = () => {
-  const roomName = useLocation().pathname.substr(1);
-  let timer = useRef();
+class Coding extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { value: "" };
+  }
 
-  const [roomData, setRoomData] = useState({
-    version: 0,
-    value: "",
-  });
+  componentDidMount() {
+    let that = this;
+    let roomName = window.location.href.substring(22);
+    const socket = openSocket("https://codeshare-server.herokuapp.com/");
+    socket.on("connect", function () {
+      socket.emit("room", roomName);
+    });
+    socket.on("message", function (data) {
+      if (that.state.value !== data) {
+        that.setState({ value: data });
+      }
+    });
+    socket.on("request-data", function () {
+      socket.emit("requested-data", roomName, that.state.value);
+    });
+    this.send = (value) => {
+      socket.emit("change", roomName, value);
+    };
 
-  //Fetch data from the server and check for updates - terrible solution but only temporary
-  useEffect(() => {
-    fetch(`https://sharecodetogether.firebaseio.com/rooms/${roomName}.json`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data !== null) {
-          setRoomData((roomData) => {
-            return { ...roomData, value: data.value };
-          });
-        }
-      });
-  }, [roomName]);
+    this.reqSave = () => {
+      socket.emit("request-save", roomName, this.state.value);
+    };
+  }
 
-  //Save data to server
-  useEffect(() => {
-    clearTimeout(timer.current);
-    timer.current = setTimeout(() => {
-      fetch(`https://sharecodetogether.firebaseio.com/rooms/${roomName}.json`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(roomData),
-      });
-    }, 500);
-  }, [roomData, roomName]);
-
-  return (
-    <div className={styles.code}>
-      <textarea
-        value={roomData.value}
-        className={styles.codeText}
-        placeholder="Write your code here. People in the same room can see code as you type it!"
-        onChange={(event) => {
-          setRoomData({
-            ...roomData,
-            value: event.target.value,
-          });
-        }}
-      ></textarea>
-      <SideBar />
-    </div>
-  );
-};
+  render() {
+    return (
+      <div className={styles.code}>
+        <textarea
+          value={this.state.value}
+          className={styles.codeText}
+          placeholder="Write your code here. People in the same room can see code as you type it!"
+          onChange={(event) => {
+            this.setState({
+              value: event.target.value,
+            });
+            this.send(event.target.value);
+          }}
+        ></textarea>
+        <SideBar
+          save={() => {
+            this.state.value === ""
+              ? console.log("You can not save an empty room!")
+              : this.reqSave();
+          }}
+        />
+      </div>
+    );
+  }
+}
 
 export default Coding;

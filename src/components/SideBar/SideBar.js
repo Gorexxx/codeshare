@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import styles from "./SideBar.module.css";
 import MenuItem from "./MenuItem";
 
-const SideBar = () => {
+const SideBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentTab, setCurrentTab] = useState("");
   const ItemList = [
+    { value: "save", action: () => props.save() },
     { value: "settings", action: (x) => openClose(x) },
     { value: "info", action: (x) => openClose(x) },
   ];
@@ -38,16 +39,17 @@ const SideBar = () => {
           {currentTab === "settings" ? (
             <div>
               <h2>Settings</h2>
-              <div className={styles.option}>
+              {/*<div className={styles.option}>
                 <p>Theme</p>
                 <select defaultValue="default">
                   <option value="default">Default</option>
                   <option value="dark">Dark</option>
                   <option value="light">Light</option>
                 </select>
-              </div>
+              </div>*/}
+              
               <div className={styles.option}>
-                <p>More coming soon</p>
+                <p>Coming soon</p>
               </div>
             </div>
           ) : (
@@ -67,7 +69,8 @@ const SideBar = () => {
                   <span role="img" aria-label="save">
                     💾
                   </span>
-                  Your progress is saved every time you stop writing.
+                  You can save your progress by clicking on save icon. Next time
+                  you visit this URL your text will still be there!
                 </p>
               </div>
               <div className={styles.option}>
