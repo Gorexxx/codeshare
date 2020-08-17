@@ -11,7 +11,7 @@ class Coding extends Component {
 
   componentDidMount() {
     let that = this;
-    let roomName = window.location.href.substring(22);
+    let roomName = window.location.href.substring(37);
     const socket = openSocket("https://codeshare-server.herokuapp.com/");
     socket.on("connect", function () {
       socket.emit("room", roomName);
