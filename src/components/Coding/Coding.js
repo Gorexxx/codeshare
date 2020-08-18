@@ -39,7 +39,7 @@ class Coding extends Component {
         <textarea
           value={this.state.value}
           className={styles.codeText}
-          placeholder="Write your code here. People in the same room can see code as you type it!"
+          placeholder="WARNING! You might experience an initial lag caused by a server.&#10;Write your code here. People in the same room can see code as you type it!"
           onChange={(event) => {
             this.setState({
               value: event.target.value,
