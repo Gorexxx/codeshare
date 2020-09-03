@@ -3,6 +3,25 @@ import styles from "./SideBar.module.css";
 import MenuItem from "./MenuItem";
 
 const SideBar = (props) => {
+  const schemes = {
+    dark: {
+      text: "#ffffff",
+      background: "#222222",
+    },
+    light: {
+      text: "#111111",
+      background: "#cfcfcf",
+    },
+    blue: {
+      text: "#54dce8",
+      background: "#002a2e",
+    },
+    pink: {
+      text: "#f500ed",
+      background: "#210020",
+    },
+  };
+
   const [isOpen, setIsOpen] = useState(false);
   const [currentTab, setCurrentTab] = useState("");
   const ItemList = [
@@ -20,6 +39,11 @@ const SideBar = (props) => {
       }
     }
   }
+
+  function changeColorScheme(newColor){
+    props.changeColor(schemes[newColor])
+  }
+
   return (
     <div className={isOpen ? styles.sideBarOpen : styles.sideBarClosed}>
       <div className={styles.sideBar}>
@@ -39,18 +63,17 @@ const SideBar = (props) => {
           {currentTab === "settings" ? (
             <div>
               <h2>Settings</h2>
-              {/*<div className={styles.option}>
+              <div className={styles.option}>
                 <p>Theme</p>
-                <select defaultValue="default">
-                  <option value="default">Default</option>
+                <select defaultValue="default" onChange={(event) => changeColorScheme(event.target.value)}>
                   <option value="dark">Dark</option>
                   <option value="light">Light</option>
+                  <option value="blue">Blue</option>
+                  <option value="pink">Pink</option>
                 </select>
-              </div>*/}
-              
-              <div className={styles.option}>
-                <p>Coming soon</p>
               </div>
+
+              
             </div>
           ) : (
             <div>

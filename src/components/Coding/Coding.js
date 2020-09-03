@@ -6,13 +6,21 @@ import openSocket from "socket.io-client";
 class Coding extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: "" };
+    this.state = {
+      value: "",
+      socket: openSocket("https://codeshare-server.herokuapp.com/"),
+      colorScheme: {
+        text: "#ffffff",
+        background: "#222222",
+      }
+    };
   }
 
   componentDidMount() {
     let that = this;
     let roomName = window.location.href.substring(37);
-    const socket = openSocket("https://codeshare-server.herokuapp.com/");
+    //let roomName = window.location.href.substring(22);
+    let socket = this.state.socket;
     socket.on("connect", function () {
       socket.emit("room", roomName);
     });
@@ -24,6 +32,7 @@ class Coding extends Component {
     socket.on("request-data", function () {
       socket.emit("requested-data", roomName, that.state.value);
     });
+
     this.send = (value) => {
       socket.emit("change", roomName, value);
     };
@@ -31,6 +40,10 @@ class Coding extends Component {
     this.reqSave = () => {
       socket.emit("request-save", roomName, this.state.value);
     };
+  }
+
+  componentWillUnmount() {
+    this.state.socket.disconnect();
   }
 
   render() {
@@ -46,12 +59,16 @@ class Coding extends Component {
             });
             this.send(event.target.value);
           }}
+          style={{color: this.state.colorScheme.text, backgroundColor: this.state.colorScheme.background}}
         ></textarea>
         <SideBar
           save={() => {
             this.state.value === ""
               ? console.log("You can not save an empty room!")
               : this.reqSave();
+          }}
+          changeColor={(newColor) => {
+            this.setState({colorScheme: newColor})
           }}
         />
       </div>

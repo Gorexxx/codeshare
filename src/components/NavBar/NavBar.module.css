@@ -1,11 +1,10 @@
 .navbar {
-  height: 5vh;
   width: 100%;
   background-color: var(--background-primary);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
+  padding: 10px;
 }
 
 .enterRoom{
@@ -36,7 +35,7 @@
   color: var(--elements);
 }
 @media (max-width: 500px){
-  .enterRoom{
-    display: none;
+  .navbar{
+    flex-flow: column;
   }
 }
