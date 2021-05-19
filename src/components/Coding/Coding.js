@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import styles from "./Coding.module.css";
 import SideBar from "../SideBar/SideBar";
 import openSocket from "socket.io-client";
 
-class Coding extends Component {
+class Coding extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,17 +12,20 @@ class Coding extends Component {
       colorScheme: {
         text: "#ffffff",
         background: "#222222",
-      }
+      },
+      placeholder:
+        "Checking if room has any information saved on the server...\n This might take a while if it is the first time opening this app because of slow server speed",
     };
   }
 
   componentDidMount() {
     let that = this;
-    let roomName = window.location.href.substring(37);
-    //let roomName = window.location.href.substring(22);
+    let roomName = window.location.href.split("/").slice(-1);
+    //Handle sockets on mount
     let socket = this.state.socket;
     socket.on("connect", function () {
       socket.emit("room", roomName);
+      that.setState({ placeholder: 'You can start writing your code!' });
     });
     socket.on("message", function (data) {
       if (that.state.value !== data) {
@@ -52,14 +55,17 @@ class Coding extends Component {
         <textarea
           value={this.state.value}
           className={styles.codeText}
-          placeholder="WARNING! You might experience an initial lag caused by a server.&#10;Write your code here. People in the same room can see code as you type it!"
+          placeholder={this.state.placeholder}
           onChange={(event) => {
             this.setState({
               value: event.target.value,
             });
             this.send(event.target.value);
           }}
-          style={{color: this.state.colorScheme.text, backgroundColor: this.state.colorScheme.background}}
+          style={{
+            color: this.state.colorScheme.text,
+            backgroundColor: this.state.colorScheme.background,
+          }}
         ></textarea>
         <SideBar
           save={() => {
@@ -68,7 +74,7 @@ class Coding extends Component {
               : this.reqSave();
           }}
           changeColor={(newColor) => {
-            this.setState({colorScheme: newColor})
+            this.setState({ colorScheme: newColor });
           }}
         />
       </div>

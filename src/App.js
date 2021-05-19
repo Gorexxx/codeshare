@@ -6,19 +6,23 @@ import MainPage from "./components/MainPage/MainPage";
 import NavBar from "./components/NavBar/NavBar";
 
 function App() {
+  const keyContext = React.createContext(1);
+
   return (
     <div className={styles.App}>
-      <BrowserRouter>
-        <NavBar />
-        <Switch>
-          <Route exact path="/">
-            <MainPage />
-          </Route>
-          <Route path="/">
-            <Coding />
-          </Route>
-        </Switch>
-      </BrowserRouter>
+      <keyContext.Provider>
+        <BrowserRouter>
+          <NavBar />
+          <Switch>
+            <Route exact path="/">
+              <MainPage />
+            </Route>
+            <Route path="/">
+              <Coding />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      </keyContext.Provider>
     </div>
   );
 }

@@ -23,7 +23,7 @@ const MainPage = () => {
       <p className={styles.mainDesc}>
         An online code editor for every purpose...
       </p>
-      <Link to={'/' + roomName} className={styles.button}>
+      <Link to={"/" + roomName} className={styles.button}>
         Start sharing code
       </Link>
 
@@ -36,7 +36,7 @@ const MainPage = () => {
             Open an editor, write or copy code, then share it with friends and
             colleagues.
           </p>
-          <Link to={'/' + roomName}>Code Together</Link>
+          <Link to={"/" + roomName}>Code Together</Link>
         </div>
         <div className={styles.information}>
           <h3>Interview developers</h3>
@@ -44,7 +44,7 @@ const MainPage = () => {
             Set coding tasks and observe in real-time when interviewing remotely
             or in person. Nobody likes writing code on a whiteboard.
           </p>
-          <Link to={'/' + roomName}>Start An Interview</Link>
+          <Link to={"/" + roomName}>Start An Interview</Link>
         </div>
         <div className={styles.information}>
           <h3>Teach people programming</h3>
@@ -53,7 +53,7 @@ const MainPage = () => {
             Universities and colleges around the world use similar solutions
             every day.
           </p>
-          <Link to={'/' + roomName}>Teach Code</Link>
+          <Link to={"/" + roomName}>Teach Code</Link>
         </div>
       </div>
       <div className={styles.footer}> &copy; Jakub Gorka 2020 </div>
